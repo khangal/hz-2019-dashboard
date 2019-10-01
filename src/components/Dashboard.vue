@@ -11,8 +11,17 @@
         </div>
       </div>
     </div>
-    <transition-group name="team-list" tag="ul" class="scoreboard" style="z-index:10000">
-      <li v-for="team in sortedTeams" :key="team.name" @click="boost(team.id, 200)">
+    <transition-group
+      name="team-list"
+      tag="ul"
+      class="scoreboard"
+      style="z-index:10000"
+    >
+      <li
+        v-for="team in sortedTeams"
+        :key="team.name"
+        @click="boost(team.id, 200)"
+      >
         {{ `${team.score}`.padStart(2, "0") }} {{ team.name }}
       </li>
     </transition-group>
@@ -22,15 +31,19 @@
 <script>
 import anime from "animejs";
 import moment from "moment";
+import axios from "axios";
 
 // const duration = 10 * 3600 * 5
 const duration = 1000 * 3600 * 5;
 const startTime = moment("2019-10-01 09:10");
 
-const TIME_PERCENT = 50;
-const POINT_PERCENT = 50;
+// 15000 100%
+// 5433 30%
+
+const TIME_PERCENT = 80;
+const POINT_PERCENT = 20;
 const TOTAL_POINTS = 1600;
-const oneScoreValue = POINT_PERCENT / TOTAL_POINTS;
+// const oneScoreValue = POINT_PERCENT / TOTAL_POINTS;
 
 export default {
   name: "Dashboard",
@@ -43,42 +56,42 @@ export default {
         {
           id: 1,
           name: "team mouse",
-          score: 5 * 200
+          score: 0 * 200
         },
         {
           id: 2,
           name: "team cow",
-          score: 6 * 200
+          score: 0 * 200
         },
         {
           id: 3,
           name: "team tiger",
-          score: 7 * 200
+          score: 0 * 200
         },
         {
           id: 4,
           name: "team rabbit",
-          score: 8 * 200
+          score: 0 * 200
         },
         {
           id: 5,
           name: "team dragon",
-          score: 6 * 200
+          score: 0 * 200
         },
         {
           id: 6,
           name: "team snake",
-          score: 3 * 200
+          score: 0 * 200
         },
         {
           id: 7,
           name: "team horse",
-          score: 2 * 200
+          score: 0 * 200
         },
         {
           id: 8,
           name: "team sheep",
-          score: 4 * 200
+          score: 0 * 200
         },
         {
           id: 9,
@@ -95,6 +108,15 @@ export default {
   },
   mounted() {
     this.go();
+
+    setInterval(() => {
+      axios.get("http://localhost:8000/api/v1/scoreboard", {}, { mode: 'no-cors' })
+        .then((res) => {
+          console.log("----------------------------")
+          console.log(res)
+          console.log("----------------------------")
+        })
+    }, 1000);
   },
   computed: {
     sortedTeams() {
@@ -119,24 +141,26 @@ export default {
         timeAnimation.play();
       });
 
-      this.teams.forEach(team => {
-        const scoreAnimation = anime({
-          targets: this.$refs[`${team.id}-shipOuter`],
-          translateX: `${oneScoreValue * team.score}%`,
-          duration: 0,
-          easing: "linear"
-        });
-      });
+      this.movePoint(0);
     },
     boost(teamId, score) {
-      const team = this.teams.find(team => team.id === teamId)
-      team.score += score
+      const team = this.teams.find(team => team.id === teamId);
+      team.score += score;
 
-      anime({
-        targets: this.$refs[`${teamId}-shipOuter`],
-        translateX: `${oneScoreValue * team.score}%`,
-        duration: 3000,
-        easing: "linear"
+      this.movePoint(3000);
+    },
+
+    movePoint(pointDuration) {
+      const maxScore = Math.max(...this.teams.map(team => team.score));
+
+      this.teams.forEach(team => {
+        anime({
+          targets: this.$refs[`${team.id}-shipOuter`],
+          translateX: `${((team.score * 100) / maxScore) *
+            (POINT_PERCENT / 100)}%`,
+          duration: pointDuration,
+          easing: "linear"
+        });
       });
     }
   }
