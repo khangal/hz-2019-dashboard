@@ -1,5 +1,17 @@
 <template>
+<div>
+<header>
+      <div class="main-object center">
+        <img id="logo" src="@/assets/logo-main.png">
+        <h3>STARWARS <br class="br">VERSION</h3>
+      </div >
+      <div class="header-flex">
+        <p>HARUUL ZANGi CTF 2019</p>
+        <p>FINAL ROUND</p>
+      </div>
+    </header>
   <div class="container">
+    
     <div class="main" style="z-index:1000">
       <div
         :ref="`${team.id}-shipOuter`"
@@ -7,7 +19,7 @@
         :key="`ship-${team.name}`"
       >
         <div :ref="`${team.id}-shipContainer`" class="ship-container">
-          <span :ref="`${team.id}-ship`" class="team-icon"> </span>
+          <span :ref="`${team.id}-ship`" class="team-icon team--yoda" > </span>
         </div>
       </div>
     </div>
@@ -30,12 +42,14 @@
       </li>
     </transition-group>
   </div>
+  </div>
 </template>
 
 <script>
 import anime from "animejs";
 import moment from "moment";
 import axios from "axios";
+import "@/assets/Font/starwars.css"
 
 // const duration = 10 * 3600 * 5
 const duration = 1000 * 3600 * 5;
@@ -58,7 +72,7 @@ export default {
     };
   },
   mounted() {
-    const promise1 = axios.get("http://localhost:8000/api/v1/teams", {}).then((res) => {
+    const promise1 = axios.get("http://192.168.2.6:8000/api/v1/teams", {}).then((res) => {
       this.teams = res.data.data.map(team => {
         return {
           id: team.id,
@@ -68,7 +82,7 @@ export default {
       })
     })
 
-    const promise2 = axios.get("http://localhost:8000/api/v1/scoreboard", {})
+    const promise2 = axios.get("http://192.168.2.6:8000/api/v1/scoreboard", {})
       .then((res) => {
         res.data.data.forEach((teamWithScore) => {
           let team = this.teams.find(team => team.name === teamWithScore.name)
@@ -80,7 +94,7 @@ export default {
       this.go()
 
       setInterval(() => {
-        axios.get("http://localhost:8000/api/v1/scoreboard", {})
+        axios.get("http://192.168.2.6:8000/api/v1/scoreboard", {})
           .then((res) => {
             res.data.data.forEach((teamWithScore) => {
               let team = this.teams.find(team => team.name === teamWithScore.name)
@@ -168,7 +182,7 @@ export default {
 }
 
 .ship-container {
-  margin-bottom: 1vh;
+  // margin-bottom: 1vh;
 }
 
 .team-list-move {
@@ -180,7 +194,27 @@ export default {
 h3 {
   margin: 40px 0 0;
 }
-
+header{
+  margin: 0 3%;
+  height: 20vh;
+  #logo{
+    width: 7%;
+  }
+  .br{
+    margin-top: 5px;
+  }
+  .main-object{
+    position: absolute;
+    text-align: center;
+  }
+  .header-flex{
+    display: flex;
+    justify-content: space-between;
+    p{
+      font-size: 2vw;
+    }
+  }
+}
 .main {
   display: flex;
   flex-direction: column;
@@ -191,7 +225,7 @@ h3 {
   padding-bottom: 2vh;
   text-align: left;
   width: 75vw;
-  height: 100vh;
+  height: 80vh;
 }
 
 .scoreboard {
@@ -217,13 +251,14 @@ li {
 
 .team-icon {
   display: inline-block;
-  border-radius: 50%;
-  background-color: white;
-  width: 5vh;
-  height: 5vh;
+  width: 7vh;
+  height: 7vh;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat
 }
 
 .team--yoda {
-  background: url("~@/assets/yoda.png");
+  background-image: url("~@/assets/Characters/9.png");
 }
 </style>
