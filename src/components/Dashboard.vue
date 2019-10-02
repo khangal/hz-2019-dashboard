@@ -20,9 +20,13 @@
       <li
         v-for="team in sortedTeams"
         :key="team.name"
-        @click="boost(team.id, 200)"
+        class="score-item"
       >
-        {{ `${team.score}`.padStart(2, "0") }} {{ team.name }}
+        <span class="score">
+          {{ `${team.score}`.padStart(2, "0") }}
+        </span>
+
+        <span class="score-team">{{ team.name }}</span>
       </li>
     </transition-group>
   </div>
@@ -35,15 +39,13 @@ import axios from "axios";
 
 // const duration = 10 * 3600 * 5
 const duration = 1000 * 3600 * 5;
-const startTime = moment("2019-10-01 09:10");
+const startTime = moment("2019-10-02 12:10");
 
 // 15000 100%
 // 5433 30%
 
 const TIME_PERCENT = 80;
 const POINT_PERCENT = 20;
-const TOTAL_POINTS = 1600;
-// const oneScoreValue = POINT_PERCENT / TOTAL_POINTS;
 
 export default {
   name: "Dashboard",
@@ -52,71 +54,57 @@ export default {
   },
   data() {
     return {
-      teams: [
-        {
-          id: 1,
-          name: "team mouse",
-          score: 0 * 200
-        },
-        {
-          id: 2,
-          name: "team cow",
-          score: 0 * 200
-        },
-        {
-          id: 3,
-          name: "team tiger",
-          score: 0 * 200
-        },
-        {
-          id: 4,
-          name: "team rabbit",
-          score: 0 * 200
-        },
-        {
-          id: 5,
-          name: "team dragon",
-          score: 0 * 200
-        },
-        {
-          id: 6,
-          name: "team snake",
-          score: 0 * 200
-        },
-        {
-          id: 7,
-          name: "team horse",
-          score: 0 * 200
-        },
-        {
-          id: 8,
-          name: "team sheep",
-          score: 0 * 200
-        },
-        {
-          id: 9,
-          name: "team monkey",
-          score: 0 * 200
-        },
-        {
-          id: 10,
-          name: "team chicken",
-          score: 0 * 200
-        }
-      ]
+      teams: []
     };
   },
   mounted() {
-    this.go();
+    const promise1 = axios.get("http://localhost:8000/api/v1/teams", {}).then((res) => {
+      this.teams = res.data.data.map(team => {
+        return {
+          id: team.id,
+          name: team.name,
+          score: 0
+        }
+      })
+    })
 
-    setInterval(() => {
-      axios.get("http://localhost:8000/api/v1/scoreboard", {}, { mode: 'no-cors' })
-        .then((res) => {
-          console.log("----------------------------")
-          console.log(res)
-          console.log("----------------------------")
+    const promise2 = axios.get("http://localhost:8000/api/v1/scoreboard", {})
+      .then((res) => {
+        res.data.data.forEach((teamWithScore) => {
+          let team = this.teams.find(team => team.name === teamWithScore.name)
+          team.score = teamWithScore.score
         })
-    }, 1000);
+      })
+
+    Promise.all([promise1, promise2]).then(() => {
+      this.go()
+
+      setInterval(() => {
+        axios.get("http://localhost:8000/api/v1/scoreboard", {})
+          .then((res) => {
+            res.data.data.forEach((teamWithScore) => {
+              let team = this.teams.find(team => team.name === teamWithScore.name)
+              if (team.score !== teamWithScore.score) {
+
+                console.log("----------------------------")
+                console.log(team, teamWithScore)
+                console.log(team.score, teamWithScore)
+                console.log("----------------------------")
+
+                team.score = teamWithScore.score
+                this.boost(team.id, team.score)
+              }
+            })
+          })
+      }, 1000);
+    })
+
+    //axios.get("http://localhost:8000/api/v1/teams/1", {}).then((res) => {
+    //  console.log("----------------------------")
+    //  console.log(res.data, "teams")
+    //  console.log("----------------------------")
+    //})
+
   },
   computed: {
     sortedTeams() {
@@ -126,7 +114,12 @@ export default {
   methods: {
     go() {
       let progress = moment.duration(moment().diff(startTime)).asMilliseconds();
-      const seekProgress = (progress * 100) / duration;
+      let seekProgress = (progress * 100) / duration;
+      seekProgress = 98
+
+      if (seekProgress > 100) {
+        seekProgress = 99.99999
+      }
 
       this.teams.forEach(team => {
         let timeAnimation = anime({
@@ -145,7 +138,7 @@ export default {
     },
     boost(teamId, score) {
       const team = this.teams.find(team => team.id === teamId);
-      team.score += score;
+      team.score = score;
 
       this.movePoint(3000);
     },
@@ -197,26 +190,29 @@ h3 {
   padding-top: 2vh;
   padding-bottom: 2vh;
   text-align: left;
-  width: 80vw;
+  width: 75vw;
   height: 100vh;
 }
 
 .scoreboard {
   font-size: 32px;
   margin-left: auto;
-  max-width: 20vw;
-  list-style-type: none;
+  width: 20vw;
   padding: 0;
+  padding-left: 2vw;
+  list-style-type: none;
   margin-right: 2vw;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
 }
 
 li {
   text-align: left;
   margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+  color: white;
 }
 
 .team-icon {
