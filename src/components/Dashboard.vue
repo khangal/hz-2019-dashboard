@@ -7,7 +7,7 @@
         :key="`ship-${team.name}`"
       >
         <div :ref="`${team.id}-shipContainer`" class="ship-container">
-          <span :ref="`${team.id}-ship`" class="team-icon"></span>
+          <span :ref="`${team.id}-ship`" class="team-icon"> </span>
         </div>
       </div>
     </div>
@@ -221,5 +221,9 @@ li {
   background-color: white;
   width: 5vh;
   height: 5vh;
+}
+
+.team--yoda {
+  background: url("~@/assets/yoda.png");
 }
 </style>
