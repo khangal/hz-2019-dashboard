@@ -13,6 +13,9 @@
   <div class="container">
     
     <div class="main" style="z-index:1000">
+      <!-- <div class="start-line">
+        <img src="@/assets/start.png">
+      </div> -->
       <div
         :ref="`${team.id}-shipOuter`"
         v-for="team in teams"
@@ -309,5 +312,8 @@ header{
     height: 55%;
     margin-right: 1vw;
   }
+}
+.start-line{
+  position: absolute;
 }
 </style>
