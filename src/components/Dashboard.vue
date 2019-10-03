@@ -330,6 +330,25 @@ header{
 .team--10 {
   background-image: url("~@/assets/characters/10.png");
 }
+.team3{
+  margin-bottom: -8px;
+}
+.team5{
+  margin-bottom: -13px;
+}
+.team8{
+  margin-bottom: -13px;
+}
+.team4{
+  margin-bottom: -8px;
+}
+.team6{
+  margin-bottom: -8px;
+}
+.team9{
+  width: 50px!important;
+  margin-bottom: -7px;
+}
 .head{
   // .team1{
   //   width: 3vw;
@@ -355,8 +374,8 @@ header{
   //   width: 2.5vw;
   // }
   img{
-    width: 12%;
-    height: 55%;
+    width: 35px;
+    // height: 55%;
     margin-right: 1vw;
   }
 }
