@@ -54,6 +54,7 @@ import anime from "animejs";
 import moment from "moment";
 import axios from "axios";
 import "@/assets/Font/starwars.css"
+import { BASE_URL } from "@/constants"
 
 // const duration = 10 * 3600 * 5
 const duration = 1000 * 3600 * 5;
@@ -76,7 +77,7 @@ export default {
     };
   },
   mounted() {
-    const promise1 = axios.get("http://192.168.2.6:8000/api/v1/teams", {}).then((res) => {
+    const promise1 = axios.get(`${BASE_URL}/api/v1/teams`, {}).then((res) => {
       this.teams = res.data.data.map(team => {
         return {
           id: team.id,
@@ -86,7 +87,7 @@ export default {
       })
     })
 
-    const promise2 = axios.get("http://192.168.2.6:8000/api/v1/scoreboard", {})
+    const promise2 = axios.get(`${BASE_URL}/api/v1/scoreboard`, {})
       .then((res) => {
         res.data.data.forEach((teamWithScore) => {
           let team = this.teams.find(team => team.name === teamWithScore.name)
@@ -98,16 +99,11 @@ export default {
       this.go()
 
       setInterval(() => {
-        axios.get("http://192.168.2.6:8000/api/v1/scoreboard", {})
+        axios.get(`${BASE_URL}/api/v1/scoreboard`, {})
           .then((res) => {
             res.data.data.forEach((teamWithScore) => {
               let team = this.teams.find(team => team.name === teamWithScore.name)
               if (team.score !== teamWithScore.score) {
-
-                console.log("----------------------------")
-                console.log(team, teamWithScore)
-                console.log(team.score, teamWithScore)
-                console.log("----------------------------")
 
                 team.score = teamWithScore.score
                 this.boost(team.id, team.score)
@@ -116,13 +112,6 @@ export default {
           })
       }, 1000);
     })
-
-    //axios.get("http://localhost:8000/api/v1/teams/1", {}).then((res) => {
-    //  console.log("----------------------------")
-    //  console.log(res.data, "teams")
-    //  console.log("----------------------------")
-    //})
-
   },
   computed: {
     sortedTeams() {
