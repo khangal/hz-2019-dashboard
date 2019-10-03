@@ -19,7 +19,7 @@
         :key="`ship-${team.name}`"
       >
         <div :ref="`${team.id}-shipContainer`" class="ship-container">
-          <span :ref="`${team.id}-ship`" class="team-icon team--yoda" > </span>
+          <span :ref="`${team.id}-ship`" :class="`team--` + team.id" class="team-icon"  > </span>
         </div>
       </div>
     </div>
@@ -34,11 +34,15 @@
         :key="team.name"
         class="score-item"
       >
+      <div>
+        <span class="head"><img :class="`team` + team.id" :src="require(`@/assets/heads/`+team.id + `.png`)"></span>
+        <span class="team-name">{{ team.name }}</span>
+      </div>
+      <div>
         <span class="score">
           {{ `${team.score}`.padStart(2, "0") }}
         </span>
-
-        <span class="score-team">{{ team.name }}</span>
+      </div>
       </li>
     </transition-group>
   </div>
@@ -241,14 +245,13 @@ header{
 .score-item {
   display: flex;
   justify-content: space-between;
-}
-
-li {
   text-align: left;
-  margin: 0 10px;
+  margin: 1.5vw 0;
   color: white;
 }
-
+.score-item:first-child{
+      margin: 0;
+}
 .team-icon {
   display: inline-block;
   width: 7vh;
@@ -258,7 +261,64 @@ li {
   background-repeat: no-repeat
 }
 
-.team--yoda {
+.team--1 {
+  background-image: url("~@/assets/Characters/1.png");
+}
+.team--2 {
+  background-image: url("~@/assets/Characters/2.png");
+}
+.team--3 {
+  background-image: url("~@/assets/Characters/3.png");
+}
+.team--4 {
+  background-image: url("~@/assets/Characters/4.png");
+}
+.team--5 {
+  background-image: url("~@/assets/Characters/5.png");
+}
+.team--6 {
+  background-image: url("~@/assets/Characters/6.png");
+}
+.team--7 {
+  background-image: url("~@/assets/Characters/7.png");
+}
+.team--8 {
+  background-image: url("~@/assets/Characters/8.png");
+}
+.team--9 {
   background-image: url("~@/assets/Characters/9.png");
+}
+.team--10 {
+  background-image: url("~@/assets/Characters/10.png");
+}
+.head{
+  // .team1{
+  //   width: 3vw;
+  //   height: 1.7vw;
+  // }
+  // .team2{
+  //   height: 2.5vw;
+  // }
+  // .team3{
+  //   height: 2vw;
+  // }
+  // .team4{
+  //   height: 2.6vw;
+  // }
+  // .team5{
+  //   height: 2.4vw;
+  // }
+  // .team6{
+  //   height: 2.7vw;
+  // }
+  // .team7{
+  //   height: 2.1vw;
+  //   width: 2.5vw;
+  // }
+  img{
+    width: 12%;
+    height: 55%;
+    margin-right: 1vw;
+  }
 }
 </style>
