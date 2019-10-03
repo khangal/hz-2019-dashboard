@@ -251,34 +251,34 @@ header{
 }
 
 .team--1 {
-  background-image: url("~@/assets/Characters/1.png");
+  background-image: url("~@/assets/characters/1.png");
 }
 .team--2 {
-  background-image: url("~@/assets/Characters/2.png");
+  background-image: url("~@/assets/characters/2.png");
 }
 .team--3 {
-  background-image: url("~@/assets/Characters/3.png");
+  background-image: url("~@/assets/characters/3.png");
 }
 .team--4 {
-  background-image: url("~@/assets/Characters/4.png");
+  background-image: url("~@/assets/characters/4.png");
 }
 .team--5 {
-  background-image: url("~@/assets/Characters/5.png");
+  background-image: url("~@/assets/characters/5.png");
 }
 .team--6 {
-  background-image: url("~@/assets/Characters/6.png");
+  background-image: url("~@/assets/characters/6.png");
 }
 .team--7 {
-  background-image: url("~@/assets/Characters/7.png");
+  background-image: url("~@/assets/characters/7.png");
 }
 .team--8 {
-  background-image: url("~@/assets/Characters/8.png");
+  background-image: url("~@/assets/characters/8.png");
 }
 .team--9 {
-  background-image: url("~@/assets/Characters/9.png");
+  background-image: url("~@/assets/characters/9.png");
 }
 .team--10 {
-  background-image: url("~@/assets/Characters/10.png");
+  background-image: url("~@/assets/characters/10.png");
 }
 .head{
   // .team1{
