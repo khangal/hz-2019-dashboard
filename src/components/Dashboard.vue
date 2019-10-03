@@ -17,6 +17,7 @@
       </div>
     </header>
   <div class="container">
+    <!-- <img src="@/assets/death-star.png" alt="" style="height:10vh;position:absolute;left:30%; top:5%; mask-image: linear-gradient(180deg, rgba(0,0,0,1), rgba(0,0,0,0)"> -->
     <div class="main" style="z-index:1000">
       <!-- <div class="start-line">
         <img src="@/assets/start.png">
@@ -52,6 +53,8 @@
           {{ `${team.score}`.padStart(2, "0") }}
         </span>
       </div>
+
+        <span class="score-team">{{ team.name }}</span>
       </li>
     </transition-group>
   </div>
@@ -91,7 +94,8 @@ export default {
         return {
           id: team.id,
           name: team.name,
-          score: 0
+          score: 0,
+          pos: 10
         }
       })
     })
@@ -101,6 +105,7 @@ export default {
         res.data.data.forEach((teamWithScore) => {
           let team = this.teams.find(team => team.name === teamWithScore.name)
           team.score = teamWithScore.score
+          team.pos = teamWithScore.pos
         })
       })
 
@@ -113,9 +118,7 @@ export default {
             res.data.data.forEach((teamWithScore) => {
               let team = this.teams.find(team => team.name === teamWithScore.name)
               if (team.score !== teamWithScore.score) {
-
-                team.score = teamWithScore.score
-                this.boost(team.id, team.score)
+                this.boost(teamWithScore)
               }
             })
           })
@@ -124,7 +127,7 @@ export default {
   },
   computed: {
     sortedTeams() {
-      return this.teams.concat().sort((a, b) => b.score - a.score);
+      return this.teams.concat().sort((a, b) => a.pos - b.pos);
     }
   },
   methods: {
@@ -151,9 +154,10 @@ export default {
 
       this.movePoint(0);
     },
-    boost(teamId, score) {
-      const team = this.teams.find(team => team.id === teamId);
-      team.score = score;
+    boost(teamWithScore) {
+      const team = this.teams.find(team => team.id === teamWithScore.id);
+      team.score = teamWithScore.score;
+      team.pos = teamWithScore.pos
 
       this.playNewScore()
 
