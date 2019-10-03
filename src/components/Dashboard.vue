@@ -371,30 +371,26 @@ header {
 .team--10 {
   background-image: url("~@/assets/characters/10.png");
 }
-.head {
-  // .team1{
-  //   width: 3vw;
-  //   height: 1.7vw;
-  // }
-  // .team2{
-  //   height: 2.5vw;
-  // }
-  // .team3{
-  //   height: 2vw;
-  // }
-  // .team4{
-  //   height: 2.6vw;
-  // }
-  // .team5{
-  //   height: 2.4vw;
-  // }
-  // .team6{
-  //   height: 2.7vw;
-  // }
-  // .team7{
-  //   height: 2.1vw;
-  //   width: 2.5vw;
-  // }
+.team3{
+  margin-bottom: -8px;
+}
+.team5{
+  margin-bottom: -13px;
+}
+.team8{
+  margin-bottom: -13px;
+}
+.team4{
+  margin-bottom: -8px;
+}
+.team6{
+  margin-bottom: -8px;
+}
+.team9{
+  width: 50px!important;
+  margin-bottom: -7px;
+}
+.head{
   img {
     width: 12%;
     height: 55%;
