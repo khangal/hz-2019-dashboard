@@ -19,17 +19,23 @@
   <div class="container">
     <!-- <img src="@/assets/death-star.png" alt="" style="height:10vh;position:absolute;left:30%; top:5%; mask-image: linear-gradient(180deg, rgba(0,0,0,1), rgba(0,0,0,0)"> -->
     <div class="main" style="z-index:1000">
-      <!-- <div class="start-line">
-        <img src="@/assets/start.png">
-      </div> -->
+      <div class="start-line">
+        <span class="start-text">Start Line</span>
+        <img src="@/assets/start.svg">
+      </div>
       <div
         :ref="`${team.id}-shipOuter`"
         v-for="team in teams"
         :key="`ship-${team.name}`"
+        class="ships"
       >
         <div :ref="`${team.id}-shipContainer`" class="ship-container">
           <span :ref="`${team.id}-ship`" :class="`team--` + team.id" class="team-icon"  > </span>
         </div>
+      </div>
+      <div class="finish-line">
+        <img src="@/assets/finish.svg">
+        <span class="finish-text">Finish Line</span>
       </div>
     </div>
 
@@ -45,8 +51,9 @@
         class="score-item"
       >
       <div>
+        <span class="team-pos">{{ team.pos }} .</span>
         <span class="head"><img :class="`team` + team.id" :src="require(`@/assets/heads/`+team.id + `.png`)"></span>
-        <span class="team-name">{{ team.name }}</span>
+        <span class="team-name" :class="positionClass(team.pos)">{{ team.name }}</span>
       </div>
       <div>
         <span class="score">
@@ -54,7 +61,6 @@
         </span>
       </div>
 
-        <span class="score-team">{{ team.name }}</span>
       </li>
     </transition-group>
   </div>
@@ -128,7 +134,8 @@ export default {
   computed: {
     sortedTeams() {
       return this.teams.concat().sort((a, b) => a.pos - b.pos);
-    }
+    },
+    
   },
   methods: {
     go() {
@@ -153,6 +160,18 @@ export default {
       });
 
       this.movePoint(0);
+    },
+    positionClass(position){
+      if (position === 1){
+        return 'gold'
+      }
+      else if (position === 2){
+        return 'silver'
+      }
+      else if (position ===3){
+        return 'bronze'
+      }
+      return ""
     },
     boost(teamWithScore) {
       const team = this.teams.find(team => team.id === teamWithScore.id);
@@ -218,6 +237,7 @@ header{
   .main-object{
     position: absolute;
     text-align: center;
+    top :2%;
   }
   .header-flex{
     display: flex;
@@ -236,8 +256,9 @@ header{
   padding-top: 2vh;
   padding-bottom: 2vh;
   text-align: left;
-  width: 75vw;
+  width: 70vw;
   height: 80vh;
+  position: relative;
 }
 
 .scoreboard {
@@ -256,6 +277,12 @@ header{
   text-align: left;
   margin: 1.5vw 0;
   color: white;
+  .team-name{
+    font-size: 21px;
+  }
+  .score{
+    font-size: 25px;
+  }
 }
 .score-item:first-child{
       margin: 0;
@@ -268,7 +295,11 @@ header{
   background-position: center;
   background-repeat: no-repeat
 }
-
+.team-pos{
+  margin-left: -15px;
+  font-size: 20px;
+  margin-right: 10px;
+}
 .team--1 {
   background-image: url("~@/assets/characters/1.png");
 }
@@ -331,5 +362,49 @@ header{
 }
 .start-line{
   position: absolute;
+  left: -60px;
+  margin-left: 20px;
+  img{
+   height: 85vh;
+  }
+  .start-text{
+    position: absolute;
+    left: -10px;
+    top: 45%;
+    font-size: 25px;
+    transform: rotate(-90deg);
+    text-transform: uppercase;
+  }
+  
+}
+.finish-line{
+  position: absolute;
+  right: -13%;
+  top: 0;
+  img{
+    height: 85vh;
+    transform: rotate(180deg);
+  }
+  .finish-text{
+    position: absolute;
+    right: -10px;
+    top: 40%;
+    font-size: 25px;
+    transform: rotate(90deg);
+    text-transform: uppercase;
+    color: #fff;
+  }
+}
+.ships{
+  margin-left: 5%;
+}
+.gold{
+  color: #D6AF36;
+}
+.silver{
+ color: #A7A7AD;
+}
+.bronze{
+  color: #A77044;
 }
 </style>
