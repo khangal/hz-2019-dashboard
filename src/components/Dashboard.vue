@@ -1,17 +1,22 @@
 <template>
 <div>
+
 <header>
       <div class="main-object center">
-        <img id="logo" src="@/assets/logo-main.png">
+        <img id="logo" src="@/assets/logo-main.png" >
         <h3>STARWARS <br class="br">VERSION</h3>
       </div >
       <div class="header-flex">
+
+        <audio id="myAudio" style="display:none">
+          <source :src="require(`@/assets/new-score.mp3`)" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
         <p>HARUUL ZANGi CTF 2019</p>
         <p>FINAL ROUND</p>
       </div>
     </header>
   <div class="container">
-    
     <div class="main" style="z-index:1000">
       <!-- <div class="start-line">
         <img src="@/assets/start.png">
@@ -26,6 +31,7 @@
         </div>
       </div>
     </div>
+
     <transition-group
       name="team-list"
       tag="ul"
@@ -61,7 +67,7 @@ import { BASE_URL } from "@/constants"
 
 // const duration = 10 * 3600 * 5
 const duration = 1000 * 3600 * 5;
-const startTime = moment("2019-10-02 12:10");
+const startTime = moment("2019-10-03 17:20");
 
 // 15000 100%
 // 5433 30%
@@ -125,7 +131,6 @@ export default {
     go() {
       let progress = moment.duration(moment().diff(startTime)).asMilliseconds();
       let seekProgress = (progress * 100) / duration;
-      seekProgress = 98
 
       if (seekProgress > 100) {
         seekProgress = 99.99999
@@ -150,7 +155,14 @@ export default {
       const team = this.teams.find(team => team.id === teamId);
       team.score = score;
 
+      this.playNewScore()
+
       this.movePoint(3000);
+    },
+
+    playNewScore() {
+      var x = document.getElementById("myAudio");
+      x.play()
     },
 
     movePoint(pointDuration) {
