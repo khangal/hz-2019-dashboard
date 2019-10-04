@@ -147,6 +147,19 @@ export default {
             );
 
             if (team.score !== teamWithScore.score) {
+
+              if (teamWithScore.score > team.score) {
+                if (this.$refs[`team${team.id}-lightning`][0]) {
+                  this.$refs[`team${team.id}-lightning`][0].style.opacity = 100;
+                }
+                
+                if (this.$refs[`team${team.id}-lightning2`][0]) {
+                  this.$refs[`team${team.id}-lightning2`][0].style.opacity = 100;
+                }
+
+                this.playNewScore();
+              }
+
               this.boost(teamWithScore);
             }
           });
@@ -199,15 +212,6 @@ export default {
       team.score = teamWithScore.score;
       team.pos = teamWithScore.pos;
 
-      if (this.$refs[`team${team.id}-lightning`][0]) {
-        this.$refs[`team${team.id}-lightning`][0].style.opacity = 100;
-      }
-
-      if (this.$refs[`team${team.id}-lightning2`][0]) {
-        this.$refs[`team${team.id}-lightning2`][0].style.opacity = 100;
-      }
-
-      this.playNewScore();
       this.movePoint(
         3000,
         this.$refs[`team${team.id}-lightning`][0],
