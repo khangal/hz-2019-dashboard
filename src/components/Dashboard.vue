@@ -341,59 +341,58 @@ header {
   font-size: 20px;
   margin-right: 10px;
 }
-.team--1 {
-  background-image: url("~@/assets/characters/1.png");
-}
 .team--2 {
   background-image: url("~@/assets/characters/2.png");
 }
 .team--3 {
   background-image: url("~@/assets/characters/3.png");
 }
-.team--4 {
-  background-image: url("~@/assets/characters/4.png");
-}
-.team--5 {
-  background-image: url("~@/assets/characters/5.png");
-}
-.team--6 {
-  background-image: url("~@/assets/characters/6.png");
-}
 .team--7 {
   background-image: url("~@/assets/characters/7.png");
 }
-.team--8 {
-  background-image: url("~@/assets/characters/8.png");
+.team--27 {
+  background-image: url("~@/assets/characters/27.png");
 }
-.team--9 {
-  background-image: url("~@/assets/characters/9.png");
+.team--36 {
+  background-image: url("~@/assets/characters/36.png");
 }
-.team--10 {
-  background-image: url("~@/assets/characters/10.png");
+.team--37 {
+  background-image: url("~@/assets/characters/37.png");
 }
-.team3{
+.team--38 {
+  background-image: url("~@/assets/characters/38.png");
+}
+.team--39 {
+  background-image: url("~@/assets/characters/39.png");
+}
+.team--68 {
+  background-image: url("~@/assets/characters/68.png");
+}
+.team--155 {
+  background-image: url("~@/assets/characters/155.png");
+}
+.team7{
   margin-bottom: -8px;
 }
-.team5{
+.team36{
   margin-bottom: -13px;
 }
-.team8{
-  margin-bottom: -13px;
+.team39{
+  margin-bottom: -5px;
 }
-.team4{
+.team27{
   margin-bottom: -8px;
 }
-.team6{
+.team37{
   margin-bottom: -8px;
 }
-.team9{
+.team68{
   width: 50px!important;
   margin-bottom: -7px;
 }
 .head{
   img {
     width: 12%;
-    height: 55%;
     margin-right: 1vw;
   }
 }
