@@ -95,8 +95,8 @@ import "@/assets/Font/starwars.css";
 import { BASE_URL } from "@/constants";
 
 // const duration = 10 * 3600 * 5
-const duration = 1000 * 3600 * 5;
-const startTime = moment("2019-10-03 23:20");
+const duration = 1000 * 3600 * 6;
+const startTime = moment("2019-10-04 12:00");
 
 // 15000 100%
 // 5433 30%
